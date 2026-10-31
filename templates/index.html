@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Smart Expense Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>AI Smart Expense Tracker</h1>
+    <p>Manage and understand your expenses.</p>
+
+    <div class="container">
+
+        <h2>Add Expense</h2>
+
+        <form action="/add" method="POST">
+
+            <input
+                type="text"
+                name="description"
+                placeholder="Expense description"
+                required
+            >
+
+            <input
+                type="number"
+                name="amount"
+                placeholder="Amount in ₹"
+                step="0.01"
+                min="0.01"
+                required
+            >
+
+            <button type="submit">Add Expense</button>
+
+        </form>
+
+        <h2>Total Spending: ₹{{ "%.2f"|format(total) }}</h2>
+
+        <h3>Expense History</h3>
+
+        {% for expense in expenses %}
+            <div class="expense-item">
+
+                <p>
+                    <strong>{{ expense[1] }}</strong>
+                    — ₹{{ "%.2f"|format(expense[2]) }}
+                </p>
+
+                <p>
+                    AI Predicted Category:
+                    <strong>{{ expense[3] }}</strong>
+                </p>
+
+            </div>
+
+        {% else %}
+
+            <p>No expenses added yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>
